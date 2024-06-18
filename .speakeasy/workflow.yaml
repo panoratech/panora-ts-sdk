@@ -9,3 +9,5 @@ targets:
     my-first-target:
         target: typescript
         source: panoraOpenapi-github-main
+        codeSamples:
+          output: codeSamples.yaml

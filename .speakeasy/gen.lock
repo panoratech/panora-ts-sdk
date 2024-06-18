@@ -7,6 +7,8 @@ management:
   generationVersion: 2.342.6
   releaseVersion: 0.0.1
   configChecksum: 96fdd380e6cad4067eabf15d89a01934
+  repoURL: https://github.com/panoratech/panora-ts-sdk.git
+  installationURL: https://github.com/panoratech/panora-ts-sdk
 features:
   typescript:
     additionalDependencies: 0.1.0

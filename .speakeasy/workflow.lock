@@ -2,19 +2,21 @@ speakeasyVersion: 1.308.2
 sources:
     panoraOpenapi-github-main:
         sourceNamespace: panora-openapi-github-main
-        sourceRevisionDigest: sha256:34c3d632713d195817bca388470d6d9c873fd6ca472554f674af5650e569a696
-        sourceBlobDigest: sha256:aa5a96c9da0c3c13dcca02575c3cee6d944abf79f9daa1e3ddd1f4a9bf0ea9db
+        sourceRevisionDigest: sha256:084d1bb4cecea92b212dd46516ce60155a4f61dac377042d4755871676b52e18
+        sourceBlobDigest: sha256:6f82c96d3542215b4ce94152f52b822861289809b038411302fcbe2dfc64a669
         tags:
             - latest
+            - main
 targets:
     my-first-target:
         source: panoraOpenapi-github-main
         sourceNamespace: panora-openapi-github-main
-        sourceRevisionDigest: sha256:34c3d632713d195817bca388470d6d9c873fd6ca472554f674af5650e569a696
-        sourceBlobDigest: sha256:aa5a96c9da0c3c13dcca02575c3cee6d944abf79f9daa1e3ddd1f4a9bf0ea9db
-        outLocation: /Users/rachid/Panora/panora-ts-sdk
+        sourceRevisionDigest: sha256:084d1bb4cecea92b212dd46516ce60155a4f61dac377042d4755871676b52e18
+        sourceBlobDigest: sha256:6f82c96d3542215b4ce94152f52b822861289809b038411302fcbe2dfc64a669
+        outLocation: /github/workspace/repo
 workflow:
     workflowVersion: 1.0.0
+    speakeasyVersion: latest
     sources:
         panoraOpenapi-github-main:
             inputs:
@@ -25,3 +27,5 @@ workflow:
         my-first-target:
             target: typescript
             source: panoraOpenapi-github-main
+            codeSamples:
+                output: codeSamples.yaml

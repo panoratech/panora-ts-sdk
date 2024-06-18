@@ -1,4 +1,5 @@
 workflowVersion: 1.0.0
+speakeasyVersion: latest
 sources:
     panoraOpenapi-github-main:
         inputs:
@@ -10,4 +11,4 @@ targets:
         target: typescript
         source: panoraOpenapi-github-main
         codeSamples:
-          output: codeSamples.yaml
+            output: codeSamples.yaml

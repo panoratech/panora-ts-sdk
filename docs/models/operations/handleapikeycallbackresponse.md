@@ -1,4 +1,4 @@
-# ConnectionsControllerHandleGorgiasAuthUrlResponse
+# HandleApiKeyCallbackResponse
 
 
 ## Fields

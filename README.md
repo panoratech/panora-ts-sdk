@@ -22,13 +22,28 @@ It has been generated successfully based on your OpenAPI spec. However, it is no
 ### NPM
 
 ```bash
-npm add <UNSET>
+npm add https://github.com/panoratech/panora-ts-sdk
+```
+
+### PNPM
+
+```bash
+pnpm add https://github.com/panoratech/panora-ts-sdk
+```
+
+### Bun
+
+```bash
+bun add https://github.com/panoratech/panora-ts-sdk
 ```
 
 ### Yarn
 
 ```bash
-yarn add <UNSET>
+yarn add https://github.com/panoratech/panora-ts-sdk zod
+
+# Note that Yarn does not install peer dependencies automatically. You will need
+# to install zod as shown above.
 ```
 <!-- End SDK Installation [installation] -->
 
@@ -85,7 +100,7 @@ run();
 ### [connections](docs/sdks/connections/README.md)
 
 * [handleOAuthCallback](docs/sdks/connections/README.md#handleoauthcallback) - Capture oAuth callback
-* [connectionsControllerHandleGorgiasAuthUrl](docs/sdks/connections/README.md#connectionscontrollerhandlegorgiasauthurl)
+* [handleApiKeyCallback](docs/sdks/connections/README.md#handleapikeycallback) - Capture api key callback
 * [getConnections](docs/sdks/connections/README.md#getconnections) - List Connections
 
 ### [webhook](docs/sdks/webhook/README.md)
@@ -751,7 +766,7 @@ Validation errors can also occur when either method arguments or data returned f
 
 ```typescript
 import { Panora } from "panora-ts";
-import * as errors from "panora-ts/models/errors";
+import { SDKValidationError } from "panora-ts/models/errors";
 
 const panora = new Panora({
     jwt: "<YOUR_BEARER_TOKEN_HERE>",
@@ -763,7 +778,7 @@ async function run() {
         result = await panora.getHello();
     } catch (err) {
         switch (true) {
-            case err instanceof errors.SDKValidationError: {
+            case err instanceof SDKValidationError: {
                 // Validation errors can be pretty-printed
                 console.error(err.pretty());
                 // Raw value may also be inspected

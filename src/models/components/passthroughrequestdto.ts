@@ -25,8 +25,8 @@ export type PassThroughRequestDto = {
 
 /** @internal */
 export namespace Method$ {
-    export const inboundSchema = z.nativeEnum(Method);
-    export const outboundSchema = inboundSchema;
+    export const inboundSchema: z.ZodNativeEnum<typeof Method> = z.nativeEnum(Method);
+    export const outboundSchema: z.ZodNativeEnum<typeof Method> = inboundSchema;
 }
 
 /** @internal */

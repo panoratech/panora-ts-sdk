@@ -12,7 +12,7 @@ generation:
   auth:
     oAuth2ClientCredentialsEnabled: false
 typescript:
-  version: 0.0.1
+  version: 0.1.0
   additionalDependencies:
     dependencies: {}
     devDependencies: {}
@@ -37,3 +37,4 @@ typescript:
   packageName: panora-ts
   responseFormat: envelope-http
   templateVersion: v2
+  useIndexModules: true

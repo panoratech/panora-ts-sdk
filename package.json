@@ -1,9 +1,13 @@
 {
   "name": "panora-ts",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "author": "Speakeasy",  
   "main": "./index.js",
   "sideEffects": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/panoratech/panora-ts-sdk.git"
+  },
   "scripts": {
     "lint": "eslint --max-warnings=0 src",
     "build": "tsc",

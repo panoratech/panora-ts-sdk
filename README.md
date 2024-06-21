@@ -100,7 +100,7 @@ run();
 ### [connections](docs/sdks/connections/README.md)
 
 * [handleOAuthCallback](docs/sdks/connections/README.md#handleoauthcallback) - Capture oAuth callback
-* [handleApiKeyCallback](docs/sdks/connections/README.md#handleapikeycallback) - Capture api key callback
+* [connectionsControllerHandleGorgiasAuthUrl](docs/sdks/connections/README.md#connectionscontrollerhandlegorgiasauthurl)
 * [getConnections](docs/sdks/connections/README.md#getconnections) - List Connections
 
 ### [webhook](docs/sdks/webhook/README.md)

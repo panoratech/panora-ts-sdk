@@ -4,14 +4,10 @@
 
 import { SDKHooks } from "../hooks/hooks.js";
 import { SDK_METADATA, SDKOptions, serverURLFromOptions } from "../lib/config.js";
-import {
-    encodeFormQuery as encodeFormQuery$,
-    encodeJSON as encodeJSON$,
-} from "../lib/encodings.js";
+import { encodeFormQuery as encodeFormQuery$ } from "../lib/encodings.js";
 import { HTTPClient } from "../lib/http.js";
 import * as schemas$ from "../lib/schemas.js";
 import { ClientSDK, RequestOptions } from "../lib/sdks.js";
-import * as components from "../models/components/index.js";
 import * as operations from "../models/operations/index.js";
 
 export class Connections extends ClientSDK {
@@ -114,33 +110,34 @@ export class Connections extends ClientSDK {
         return result$;
     }
 
-    /**
-     * Capture api key callback
-     */
-    async handleApiKeyCallback(
-        state: string,
-        bodyDataType: components.BodyDataType,
+    async connectionsControllerHandleGorgiasAuthUrl(
+        request: operations.ConnectionsControllerHandleGorgiasAuthUrlRequest,
         options?: RequestOptions
-    ): Promise<operations.HandleApiKeyCallbackResponse> {
-        const input$: operations.HandleApiKeyCallbackRequest = {
-            state: state,
-            bodyDataType: bodyDataType,
-        };
+    ): Promise<operations.ConnectionsControllerHandleGorgiasAuthUrlResponse> {
+        const input$ = request;
         const headers$ = new Headers();
         headers$.set("user-agent", SDK_METADATA.userAgent);
-        headers$.set("Content-Type", "application/json");
         headers$.set("Accept", "*/*");
 
         const payload$ = schemas$.parse(
             input$,
-            (value$) => operations.HandleApiKeyCallbackRequest$.outboundSchema.parse(value$),
+            (value$) =>
+                operations.ConnectionsControllerHandleGorgiasAuthUrlRequest$.outboundSchema.parse(
+                    value$
+                ),
             "Input validation failed"
         );
-        const body$ = encodeJSON$("body", payload$.BodyDataType, { explode: true });
+        const body$ = null;
 
-        const path$ = this.templateURLComponent("/connections/apikey/callback")();
+        const path$ = this.templateURLComponent("/connections/gorgias/oauth/install")();
 
         const query$ = encodeFormQuery$({
+            account: payload$.account,
+            client_id: payload$.client_id,
+            nonce: payload$.nonce,
+            redirect_uri: payload$.redirect_uri,
+            response_type: payload$.response_type,
+            scope: payload$.scope,
             state: payload$.state,
         });
 
@@ -153,7 +150,7 @@ export class Connections extends ClientSDK {
             security$ = {};
         }
         const context = {
-            operationID: "handleApiKeyCallback",
+            operationID: "ConnectionsController_handleGorgiasAuthUrl",
             oAuth2Scopes: [],
             securitySource: this.options$.jwt,
         };
@@ -164,7 +161,7 @@ export class Connections extends ClientSDK {
             context,
             {
                 security: securitySettings$,
-                method: "POST",
+                method: "GET",
                 path: path$,
                 headers: headers$,
                 query: query$,
@@ -179,10 +176,11 @@ export class Connections extends ClientSDK {
             HttpMeta: { Response: response, Request: request$ },
         };
 
-        const [result$] = await this.matcher<operations.HandleApiKeyCallbackResponse>()
-            .void(201, operations.HandleApiKeyCallbackResponse$)
-            .fail(["4XX", "5XX"])
-            .match(response, request$, { extraFields: responseFields$ });
+        const [result$] =
+            await this.matcher<operations.ConnectionsControllerHandleGorgiasAuthUrlResponse>()
+                .void(200, operations.ConnectionsControllerHandleGorgiasAuthUrlResponse$)
+                .fail(["4XX", "5XX"])
+                .match(response, request$, { extraFields: responseFields$ });
 
         return result$;
     }

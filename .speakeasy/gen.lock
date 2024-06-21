@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: e3d87765-0f72-42c9-bff9-b86aade2789d
 management:
-  docChecksum: 3e6f37422341625c79db66c3ce938e9f
+  docChecksum: 545526d2c1533a3f25c1b5ac197b0114
   docVersion: "1.0"
-  speakeasyVersion: 1.312.0
+  speakeasyVersion: 1.313.2
   generationVersion: 2.347.8
-  releaseVersion: 0.1.0
-  configChecksum: 191a7cf3d285ce5eb5414cebf84425b9
+  releaseVersion: 0.1.1
+  configChecksum: 93bf66dc3df211a0818f6857bac89323
   repoURL: https://github.com/panoratech/panora-ts-sdk.git
   installationURL: https://github.com/panoratech/panora-ts-sdk
 features:
@@ -158,7 +158,7 @@ generatedFiles:
   - src/models/operations/generateapikey.ts
   - src/models/operations/refreshaccesstoken.ts
   - src/models/operations/handleoauthcallback.ts
-  - src/models/operations/handleapikeycallback.ts
+  - src/models/operations/connectionscontrollerhandlegorgiasauthurl.ts
   - src/models/operations/getconnections.ts
   - src/models/operations/getwebhooksmetadata.ts
   - src/models/operations/createwebhookmetadata.ts
@@ -529,7 +529,6 @@ generatedFiles:
   - src/models/components/verifyuserdto.ts
   - src/models/components/apikeydto.ts
   - src/models/components/refreshdto.ts
-  - src/models/components/bodydatatype.ts
   - src/models/components/webhookdto.ts
   - src/models/components/signatureverificationdto.ts
   - src/models/components/managedwebhooksdto.ts
@@ -707,8 +706,8 @@ generatedFiles:
   - docs/models/operations/refreshaccesstokenresponse.md
   - docs/models/operations/handleoauthcallbackrequest.md
   - docs/models/operations/handleoauthcallbackresponse.md
-  - docs/models/operations/handleapikeycallbackrequest.md
-  - docs/models/operations/handleapikeycallbackresponse.md
+  - docs/models/operations/connectionscontrollerhandlegorgiasauthurlrequest.md
+  - docs/models/operations/connectionscontrollerhandlegorgiasauthurlresponse.md
   - docs/models/operations/getconnectionsresponse.md
   - docs/models/operations/getwebhooksmetadataresponse.md
   - docs/models/operations/createwebhookmetadataresponse.md
@@ -1732,7 +1731,6 @@ generatedFiles:
   - docs/models/components/verifyuserdto.md
   - docs/models/components/apikeydto.md
   - docs/models/components/refreshdto.md
-  - docs/models/components/bodydatatype.md
   - docs/models/components/webhookdto.md
   - docs/models/components/signatureverificationdto.md
   - docs/models/components/managedwebhooksdto.md

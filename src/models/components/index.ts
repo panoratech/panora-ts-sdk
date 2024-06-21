@@ -3,7 +3,6 @@
  */
 
 export * from "./apikeydto.js";
-export * from "./bodydatatype.js";
 export * from "./connectionstrategycredentials.js";
 export * from "./createbatchlinkeduserdto.js";
 export * from "./createconnectionstrategydto.js";

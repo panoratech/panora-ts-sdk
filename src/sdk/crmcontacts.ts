@@ -43,19 +43,19 @@ export class CrmContacts extends ClientSDK {
     }
 
     /**
-     * List a batch of CRM Contacts
+     * List CRM Contacts
      */
-    async getCrmContacts(
+    async listCrmContacts(
         xConnectionToken: string,
         remoteData?: boolean | undefined,
-        pageSize?: number | undefined,
+        limit?: number | undefined,
         cursor?: string | undefined,
         options?: RequestOptions
-    ): Promise<operations.GetCrmContactsResponse> {
-        const input$: operations.GetCrmContactsRequest = {
+    ): Promise<operations.ListCrmContactsResponse> {
+        const input$: operations.ListCrmContactsRequest = {
             xConnectionToken: xConnectionToken,
             remoteData: remoteData,
-            pageSize: pageSize,
+            limit: limit,
             cursor: cursor,
         };
         const headers$ = new Headers();
@@ -64,7 +64,7 @@ export class CrmContacts extends ClientSDK {
 
         const payload$ = schemas$.parse(
             input$,
-            (value$) => operations.GetCrmContactsRequest$.outboundSchema.parse(value$),
+            (value$) => operations.ListCrmContactsRequest$.outboundSchema.parse(value$),
             "Input validation failed"
         );
         const body$ = null;
@@ -73,7 +73,7 @@ export class CrmContacts extends ClientSDK {
 
         const query$ = encodeFormQuery$({
             cursor: payload$.cursor,
-            pageSize: payload$.pageSize,
+            limit: payload$.limit,
             remote_data: payload$.remote_data,
         });
 
@@ -94,7 +94,7 @@ export class CrmContacts extends ClientSDK {
             security$ = {};
         }
         const context = {
-            operationID: "getCrmContacts",
+            operationID: "listCrmContacts",
             oAuth2Scopes: [],
             securitySource: this.options$.jwt,
         };
@@ -120,8 +120,8 @@ export class CrmContacts extends ClientSDK {
             HttpMeta: { Response: response, Request: request$ },
         };
 
-        const [result$] = await this.matcher<operations.GetCrmContactsResponse>()
-            .json(200, operations.GetCrmContactsResponse$, { key: "object" })
+        const [result$] = await this.matcher<operations.ListCrmContactsResponse>()
+            .json(200, operations.ListCrmContactsResponse$, { key: "object" })
             .fail(["4XX", "5XX"])
             .match(response, request$, { extraFields: responseFields$ });
 
@@ -216,76 +216,6 @@ export class CrmContacts extends ClientSDK {
     }
 
     /**
-     * Update a CRM Contact
-     */
-    async updateContact(
-        id: string,
-        options?: RequestOptions
-    ): Promise<operations.UpdateContactResponse> {
-        const input$: operations.UpdateContactRequest = {
-            id: id,
-        };
-        const headers$ = new Headers();
-        headers$.set("user-agent", SDK_METADATA.userAgent);
-        headers$.set("Accept", "application/json");
-
-        const payload$ = schemas$.parse(
-            input$,
-            (value$) => operations.UpdateContactRequest$.outboundSchema.parse(value$),
-            "Input validation failed"
-        );
-        const body$ = null;
-
-        const path$ = this.templateURLComponent("/crm/contacts")();
-
-        const query$ = encodeFormQuery$({
-            id: payload$.id,
-        });
-
-        let security$;
-        if (typeof this.options$.jwt === "function") {
-            security$ = { jwt: await this.options$.jwt() };
-        } else if (this.options$.jwt) {
-            security$ = { jwt: this.options$.jwt };
-        } else {
-            security$ = {};
-        }
-        const context = {
-            operationID: "updateContact",
-            oAuth2Scopes: [],
-            securitySource: this.options$.jwt,
-        };
-        const securitySettings$ = this.resolveGlobalSecurity(security$);
-
-        const doOptions = { context, errorCodes: ["4XX", "5XX"] };
-        const request$ = this.createRequest$(
-            context,
-            {
-                security: securitySettings$,
-                method: "PATCH",
-                path: path$,
-                headers: headers$,
-                query: query$,
-                body: body$,
-            },
-            options
-        );
-
-        const response = await this.do$(request$, doOptions);
-
-        const responseFields$ = {
-            HttpMeta: { Response: response, Request: request$ },
-        };
-
-        const [result$] = await this.matcher<operations.UpdateContactResponse>()
-            .json(200, operations.UpdateContactResponse$, { key: "UnifiedContactOutput" })
-            .fail(["4XX", "5XX"])
-            .match(response, request$, { extraFields: responseFields$ });
-
-        return result$;
-    }
-
-    /**
      * Retrieve a CRM Contact
      *
      * @remarks
@@ -357,90 +287,6 @@ export class CrmContacts extends ClientSDK {
 
         const [result$] = await this.matcher<operations.GetCrmContactResponse>()
             .json(200, operations.GetCrmContactResponse$, { key: "object" })
-            .fail(["4XX", "5XX"])
-            .match(response, request$, { extraFields: responseFields$ });
-
-        return result$;
-    }
-
-    /**
-     * Add a batch of CRM Contacts
-     */
-    async addCrmContacts(
-        xConnectionToken: string,
-        requestBody: Array<components.UnifiedContactInput>,
-        remoteData?: boolean | undefined,
-        options?: RequestOptions
-    ): Promise<operations.AddCrmContactsResponse> {
-        const input$: operations.AddCrmContactsRequest = {
-            xConnectionToken: xConnectionToken,
-            remoteData: remoteData,
-            requestBody: requestBody,
-        };
-        const headers$ = new Headers();
-        headers$.set("user-agent", SDK_METADATA.userAgent);
-        headers$.set("Content-Type", "application/json");
-        headers$.set("Accept", "application/json");
-
-        const payload$ = schemas$.parse(
-            input$,
-            (value$) => operations.AddCrmContactsRequest$.outboundSchema.parse(value$),
-            "Input validation failed"
-        );
-        const body$ = encodeJSON$("body", payload$.RequestBody, { explode: true });
-
-        const path$ = this.templateURLComponent("/crm/contacts/batch")();
-
-        const query$ = encodeFormQuery$({
-            remote_data: payload$.remote_data,
-        });
-
-        headers$.set(
-            "x-connection-token",
-            encodeSimple$("x-connection-token", payload$["x-connection-token"], {
-                explode: false,
-                charEncoding: "none",
-            })
-        );
-
-        let security$;
-        if (typeof this.options$.jwt === "function") {
-            security$ = { jwt: await this.options$.jwt() };
-        } else if (this.options$.jwt) {
-            security$ = { jwt: this.options$.jwt };
-        } else {
-            security$ = {};
-        }
-        const context = {
-            operationID: "addCrmContacts",
-            oAuth2Scopes: [],
-            securitySource: this.options$.jwt,
-        };
-        const securitySettings$ = this.resolveGlobalSecurity(security$);
-
-        const doOptions = { context, errorCodes: ["4XX", "5XX"] };
-        const request$ = this.createRequest$(
-            context,
-            {
-                security: securitySettings$,
-                method: "POST",
-                path: path$,
-                headers: headers$,
-                query: query$,
-                body: body$,
-            },
-            options
-        );
-
-        const response = await this.do$(request$, doOptions);
-
-        const responseFields$ = {
-            HttpMeta: { Response: response, Request: request$ },
-        };
-
-        const [result$] = await this.matcher<operations.AddCrmContactsResponse>()
-            .json(200, operations.AddCrmContactsResponse$, { key: "object" })
-            .json(201, operations.AddCrmContactsResponse$, { key: "UnifiedContactOutputs" })
             .fail(["4XX", "5XX"])
             .match(response, request$, { extraFields: responseFields$ });
 

@@ -42,12 +42,12 @@ export class Events extends ClientSDK {
      */
     async getPanoraCoreEvents(
         page?: number | undefined,
-        pageSize?: number | undefined,
+        limit?: number | undefined,
         options?: RequestOptions
     ): Promise<operations.GetPanoraCoreEventsResponse> {
         const input$: operations.GetPanoraCoreEventsRequest = {
             page: page,
-            pageSize: pageSize,
+            limit: limit,
         };
         const headers$ = new Headers();
         headers$.set("user-agent", SDK_METADATA.userAgent);
@@ -63,8 +63,8 @@ export class Events extends ClientSDK {
         const path$ = this.templateURLComponent("/events")();
 
         const query$ = encodeFormQuery$({
+            limit: payload$.limit,
             page: payload$.page,
-            pageSize: payload$.pageSize,
         });
 
         let security$;

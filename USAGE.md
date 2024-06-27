@@ -7,7 +7,7 @@ const panora = new Panora({
 });
 
 async function run() {
-    const result = await panora.getHello();
+    const result = await panora.appControllerHello();
 
     // Handle the result
     console.log(result);

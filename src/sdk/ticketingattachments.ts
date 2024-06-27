@@ -48,14 +48,14 @@ export class TicketingAttachments extends ClientSDK {
     async getTicketingAttachments(
         xConnectionToken: string,
         remoteData?: boolean | undefined,
-        pageSize?: number | undefined,
+        limit?: number | undefined,
         cursor?: string | undefined,
         options?: RequestOptions
     ): Promise<operations.GetTicketingAttachmentsResponse> {
         const input$: operations.GetTicketingAttachmentsRequest = {
             xConnectionToken: xConnectionToken,
             remoteData: remoteData,
-            pageSize: pageSize,
+            limit: limit,
             cursor: cursor,
         };
         const headers$ = new Headers();
@@ -73,7 +73,7 @@ export class TicketingAttachments extends ClientSDK {
 
         const query$ = encodeFormQuery$({
             cursor: payload$.cursor,
-            pageSize: payload$.pageSize,
+            limit: payload$.limit,
             remote_data: payload$.remote_data,
         });
 
@@ -369,92 +369,6 @@ export class TicketingAttachments extends ClientSDK {
 
         const [result$] = await this.matcher<operations.DownloadAttachmentResponse>()
             .json(200, operations.DownloadAttachmentResponse$, { key: "object" })
-            .fail(["4XX", "5XX"])
-            .match(response, request$, { extraFields: responseFields$ });
-
-        return result$;
-    }
-
-    /**
-     * Add a batch of Attachments
-     */
-    async addTicketingAttachments(
-        xConnectionToken: string,
-        requestBody: Array<components.UnifiedAttachmentInput>,
-        remoteData?: boolean | undefined,
-        options?: RequestOptions
-    ): Promise<operations.AddTicketingAttachmentsResponse> {
-        const input$: operations.AddTicketingAttachmentsRequest = {
-            xConnectionToken: xConnectionToken,
-            remoteData: remoteData,
-            requestBody: requestBody,
-        };
-        const headers$ = new Headers();
-        headers$.set("user-agent", SDK_METADATA.userAgent);
-        headers$.set("Content-Type", "application/json");
-        headers$.set("Accept", "application/json");
-
-        const payload$ = schemas$.parse(
-            input$,
-            (value$) => operations.AddTicketingAttachmentsRequest$.outboundSchema.parse(value$),
-            "Input validation failed"
-        );
-        const body$ = encodeJSON$("body", payload$.RequestBody, { explode: true });
-
-        const path$ = this.templateURLComponent("/ticketing/attachments/batch")();
-
-        const query$ = encodeFormQuery$({
-            remote_data: payload$.remote_data,
-        });
-
-        headers$.set(
-            "x-connection-token",
-            encodeSimple$("x-connection-token", payload$["x-connection-token"], {
-                explode: false,
-                charEncoding: "none",
-            })
-        );
-
-        let security$;
-        if (typeof this.options$.jwt === "function") {
-            security$ = { jwt: await this.options$.jwt() };
-        } else if (this.options$.jwt) {
-            security$ = { jwt: this.options$.jwt };
-        } else {
-            security$ = {};
-        }
-        const context = {
-            operationID: "addTicketingAttachments",
-            oAuth2Scopes: [],
-            securitySource: this.options$.jwt,
-        };
-        const securitySettings$ = this.resolveGlobalSecurity(security$);
-
-        const doOptions = { context, errorCodes: ["4XX", "5XX"] };
-        const request$ = this.createRequest$(
-            context,
-            {
-                security: securitySettings$,
-                method: "POST",
-                path: path$,
-                headers: headers$,
-                query: query$,
-                body: body$,
-            },
-            options
-        );
-
-        const response = await this.do$(request$, doOptions);
-
-        const responseFields$ = {
-            HttpMeta: { Response: response, Request: request$ },
-        };
-
-        const [result$] = await this.matcher<operations.AddTicketingAttachmentsResponse>()
-            .json(200, operations.AddTicketingAttachmentsResponse$, { key: "object" })
-            .json(201, operations.AddTicketingAttachmentsResponse$, {
-                key: "UnifiedAttachmentOutputs",
-            })
             .fail(["4XX", "5XX"])
             .match(response, request$, { extraFields: responseFields$ });
 

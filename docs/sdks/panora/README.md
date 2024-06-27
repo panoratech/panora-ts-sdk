@@ -7,11 +7,11 @@ Unified Panora API: The Panora API description
 
 ### Available Operations
 
-* [getHello](#gethello)
+* [appControllerHello](#appcontrollerhello)
 * [getHealth](#gethealth)
 * [getHelloProtected](#gethelloprotected)
 
-## getHello
+## appControllerHello
 
 ### Example Usage
 
@@ -23,7 +23,7 @@ const panora = new Panora({
 });
 
 async function run() {
-  const result = await panora.getHello();
+  const result = await panora.appControllerHello();
 
   // Handle the result
   console.log(result)
@@ -42,7 +42,7 @@ run();
 
 ### Response
 
-**Promise\<[operations.GetHelloResponse](../../models/operations/gethelloresponse.md)\>**
+**Promise\<[operations.AppControllerHelloResponse](../../models/operations/appcontrollerhelloresponse.md)\>**
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |

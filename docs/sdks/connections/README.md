@@ -4,7 +4,7 @@
 ### Available Operations
 
 * [handleOAuthCallback](#handleoauthcallback) - Capture oAuth callback
-* [connectionsControllerHandleGorgiasAuthUrl](#connectionscontrollerhandlegorgiasauthurl)
+* [handleApiKeyCallback](#handleapikeycallback) - Capture api key callback
 * [getConnections](#getconnections) - List Connections
 
 ## handleOAuthCallback
@@ -49,7 +49,9 @@ run();
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4xx-5xx         | */*             |
 
-## connectionsControllerHandleGorgiasAuthUrl
+## handleApiKeyCallback
+
+Capture api key callback
 
 ### Example Usage
 
@@ -61,15 +63,7 @@ const panora = new Panora({
 });
 
 async function run() {
-  const result = await panora.connections.connectionsControllerHandleGorgiasAuthUrl({
-    account: "81441797",
-    responseType: "<value>",
-    nonce: "<value>",
-    scope: "<value>",
-    clientId: "<value>",
-    redirectUri: "<value>",
-    state: "Massachusetts",
-  });
+  const result = await panora.connections.handleApiKeyCallback("<value>", {});
 
   // Handle the result
   console.log(result)
@@ -82,14 +76,15 @@ run();
 
 | Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `request`                                                                                                                                                                      | [operations.ConnectionsControllerHandleGorgiasAuthUrlRequest](../../models/operations/connectionscontrollerhandlegorgiasauthurlrequest.md)                                     | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `state`                                                                                                                                                                        | *string*                                                                                                                                                                       | :heavy_check_mark:                                                                                                                                                             | N/A                                                                                                                                                                            |
+| `bodyDataType`                                                                                                                                                                 | [components.BodyDataType](../../models/components/bodydatatype.md)                                                                                                             | :heavy_check_mark:                                                                                                                                                             | N/A                                                                                                                                                                            |
 | `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
 | `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
 
 
 ### Response
 
-**Promise\<[operations.ConnectionsControllerHandleGorgiasAuthUrlResponse](../../models/operations/connectionscontrollerhandlegorgiasauthurlresponse.md)\>**
+**Promise\<[operations.HandleApiKeyCallbackResponse](../../models/operations/handleapikeycallbackresponse.md)\>**
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |

@@ -8,7 +8,7 @@ import * as z from "zod";
 
 export type GetPanoraCoreEventsRequest = {
     page?: number | undefined;
-    pageSize?: number | undefined;
+    limit?: number | undefined;
 };
 
 export type GetPanoraCoreEventsResponse = {
@@ -20,18 +20,18 @@ export namespace GetPanoraCoreEventsRequest$ {
     export const inboundSchema: z.ZodType<GetPanoraCoreEventsRequest, z.ZodTypeDef, unknown> =
         z.object({
             page: z.number().default(1),
-            pageSize: z.number().default(10),
+            limit: z.number().default(10),
         });
 
     export type Outbound = {
         page: number;
-        pageSize: number;
+        limit: number;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetPanoraCoreEventsRequest> =
         z.object({
             page: z.number().default(1),
-            pageSize: z.number().default(10),
+            limit: z.number().default(10),
         });
 }
 

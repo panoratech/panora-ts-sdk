@@ -6,7 +6,6 @@
 * [getPayments](#getpayments) - List a batch of Payments
 * [addPayment](#addpayment) - Create a Payment
 * [getPayment](#getpayment) - Retrieve a Payment
-* [addPayments](#addpayments) - Add a batch of Payments
 
 ## getPayments
 
@@ -129,52 +128,6 @@ run();
 ### Response
 
 **Promise\<[operations.GetPaymentResponse](../../models/operations/getpaymentresponse.md)\>**
-### Errors
-
-| Error Object    | Status Code     | Content Type    |
-| --------------- | --------------- | --------------- |
-| errors.SDKError | 4xx-5xx         | */*             |
-
-## addPayments
-
-Add a batch of Payments
-
-### Example Usage
-
-```typescript
-import { Panora } from "panora-ts";
-
-const panora = new Panora({
-  jwt: "<YOUR_BEARER_TOKEN_HERE>",
-});
-
-async function run() {
-  const result = await panora.accountingPayment.addPayments("<value>", "<value>", [
-    {},
-  ], false);
-
-  // Handle the result
-  console.log(result)
-}
-
-run();
-```
-
-### Parameters
-
-| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `connectionToken`                                                                                                                                                              | *string*                                                                                                                                                                       | :heavy_check_mark:                                                                                                                                                             | N/A                                                                                                                                                                            |
-| `xConnectionToken`                                                                                                                                                             | *string*                                                                                                                                                                       | :heavy_check_mark:                                                                                                                                                             | The connection token                                                                                                                                                           |
-| `requestBody`                                                                                                                                                                  | [components.UnifiedPaymentInput](../../models/components/unifiedpaymentinput.md)[]                                                                                             | :heavy_check_mark:                                                                                                                                                             | N/A                                                                                                                                                                            |
-| `remoteData`                                                                                                                                                                   | *boolean*                                                                                                                                                                      | :heavy_minus_sign:                                                                                                                                                             | Set to true to include data from the original Accounting software.                                                                                                             |
-| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
-| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
-
-
-### Response
-
-**Promise\<[operations.AddPaymentsResponse](../../models/operations/addpaymentsresponse.md)\>**
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |

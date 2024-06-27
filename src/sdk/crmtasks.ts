@@ -48,14 +48,14 @@ export class CrmTasks extends ClientSDK {
     async getTasks(
         xConnectionToken: string,
         remoteData?: boolean | undefined,
-        pageSize?: number | undefined,
+        limit?: number | undefined,
         cursor?: string | undefined,
         options?: RequestOptions
     ): Promise<operations.GetTasksResponse> {
         const input$: operations.GetTasksRequest = {
             xConnectionToken: xConnectionToken,
             remoteData: remoteData,
-            pageSize: pageSize,
+            limit: limit,
             cursor: cursor,
         };
         const headers$ = new Headers();
@@ -73,7 +73,7 @@ export class CrmTasks extends ClientSDK {
 
         const query$ = encodeFormQuery$({
             cursor: payload$.cursor,
-            pageSize: payload$.pageSize,
+            limit: payload$.limit,
             remote_data: payload$.remote_data,
         });
 
@@ -216,73 +216,6 @@ export class CrmTasks extends ClientSDK {
     }
 
     /**
-     * Update a Task
-     */
-    async updateTask(id: string, options?: RequestOptions): Promise<operations.UpdateTaskResponse> {
-        const input$: operations.UpdateTaskRequest = {
-            id: id,
-        };
-        const headers$ = new Headers();
-        headers$.set("user-agent", SDK_METADATA.userAgent);
-        headers$.set("Accept", "application/json");
-
-        const payload$ = schemas$.parse(
-            input$,
-            (value$) => operations.UpdateTaskRequest$.outboundSchema.parse(value$),
-            "Input validation failed"
-        );
-        const body$ = null;
-
-        const path$ = this.templateURLComponent("/crm/tasks")();
-
-        const query$ = encodeFormQuery$({
-            id: payload$.id,
-        });
-
-        let security$;
-        if (typeof this.options$.jwt === "function") {
-            security$ = { jwt: await this.options$.jwt() };
-        } else if (this.options$.jwt) {
-            security$ = { jwt: this.options$.jwt };
-        } else {
-            security$ = {};
-        }
-        const context = {
-            operationID: "updateTask",
-            oAuth2Scopes: [],
-            securitySource: this.options$.jwt,
-        };
-        const securitySettings$ = this.resolveGlobalSecurity(security$);
-
-        const doOptions = { context, errorCodes: ["4XX", "5XX"] };
-        const request$ = this.createRequest$(
-            context,
-            {
-                security: securitySettings$,
-                method: "PATCH",
-                path: path$,
-                headers: headers$,
-                query: query$,
-                body: body$,
-            },
-            options
-        );
-
-        const response = await this.do$(request$, doOptions);
-
-        const responseFields$ = {
-            HttpMeta: { Response: response, Request: request$ },
-        };
-
-        const [result$] = await this.matcher<operations.UpdateTaskResponse>()
-            .json(200, operations.UpdateTaskResponse$, { key: "object" })
-            .fail(["4XX", "5XX"])
-            .match(response, request$, { extraFields: responseFields$ });
-
-        return result$;
-    }
-
-    /**
      * Retrieve a Task
      *
      * @remarks
@@ -354,90 +287,6 @@ export class CrmTasks extends ClientSDK {
 
         const [result$] = await this.matcher<operations.GetTaskResponse>()
             .json(200, operations.GetTaskResponse$, { key: "object" })
-            .fail(["4XX", "5XX"])
-            .match(response, request$, { extraFields: responseFields$ });
-
-        return result$;
-    }
-
-    /**
-     * Add a batch of Tasks
-     */
-    async addTasks(
-        xConnectionToken: string,
-        requestBody: Array<components.UnifiedTaskInput>,
-        remoteData?: boolean | undefined,
-        options?: RequestOptions
-    ): Promise<operations.AddTasksResponse> {
-        const input$: operations.AddTasksRequest = {
-            xConnectionToken: xConnectionToken,
-            remoteData: remoteData,
-            requestBody: requestBody,
-        };
-        const headers$ = new Headers();
-        headers$.set("user-agent", SDK_METADATA.userAgent);
-        headers$.set("Content-Type", "application/json");
-        headers$.set("Accept", "application/json");
-
-        const payload$ = schemas$.parse(
-            input$,
-            (value$) => operations.AddTasksRequest$.outboundSchema.parse(value$),
-            "Input validation failed"
-        );
-        const body$ = encodeJSON$("body", payload$.RequestBody, { explode: true });
-
-        const path$ = this.templateURLComponent("/crm/tasks/batch")();
-
-        const query$ = encodeFormQuery$({
-            remote_data: payload$.remote_data,
-        });
-
-        headers$.set(
-            "x-connection-token",
-            encodeSimple$("x-connection-token", payload$["x-connection-token"], {
-                explode: false,
-                charEncoding: "none",
-            })
-        );
-
-        let security$;
-        if (typeof this.options$.jwt === "function") {
-            security$ = { jwt: await this.options$.jwt() };
-        } else if (this.options$.jwt) {
-            security$ = { jwt: this.options$.jwt };
-        } else {
-            security$ = {};
-        }
-        const context = {
-            operationID: "addTasks",
-            oAuth2Scopes: [],
-            securitySource: this.options$.jwt,
-        };
-        const securitySettings$ = this.resolveGlobalSecurity(security$);
-
-        const doOptions = { context, errorCodes: ["4XX", "5XX"] };
-        const request$ = this.createRequest$(
-            context,
-            {
-                security: securitySettings$,
-                method: "POST",
-                path: path$,
-                headers: headers$,
-                query: query$,
-                body: body$,
-            },
-            options
-        );
-
-        const response = await this.do$(request$, doOptions);
-
-        const responseFields$ = {
-            HttpMeta: { Response: response, Request: request$ },
-        };
-
-        const [result$] = await this.matcher<operations.AddTasksResponse>()
-            .json(200, operations.AddTasksResponse$, { key: "object" })
-            .json(201, operations.AddTasksResponse$, { key: "UnifiedTaskOutputs" })
             .fail(["4XX", "5XX"])
             .match(response, request$, { extraFields: responseFields$ });
 

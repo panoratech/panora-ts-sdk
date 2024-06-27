@@ -625,7 +625,9 @@ export class Panora extends ClientSDK {
         return (this._ticketingAttachments ??= new TicketingAttachments(this.options$));
     }
 
-    async getHello(options?: RequestOptions): Promise<operations.GetHelloResponse> {
+    async appControllerHello(
+        options?: RequestOptions
+    ): Promise<operations.AppControllerHelloResponse> {
         const headers$ = new Headers();
         headers$.set("user-agent", SDK_METADATA.userAgent);
         headers$.set("Accept", "application/json");
@@ -643,7 +645,7 @@ export class Panora extends ClientSDK {
             security$ = {};
         }
         const context = {
-            operationID: "getHello",
+            operationID: "AppController_hello",
             oAuth2Scopes: [],
             securitySource: this.options$.jwt,
         };
@@ -668,8 +670,8 @@ export class Panora extends ClientSDK {
             HttpMeta: { Response: response, Request: request$ },
         };
 
-        const [result$] = await this.matcher<operations.GetHelloResponse>()
-            .json(200, operations.GetHelloResponse$, { key: "string" })
+        const [result$] = await this.matcher<operations.AppControllerHelloResponse>()
+            .json(200, operations.AppControllerHelloResponse$, { key: "string" })
             .fail(["4XX", "5XX"])
             .match(response, request$, { extraFields: responseFields$ });
 

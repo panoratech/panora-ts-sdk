@@ -48,14 +48,14 @@ export class CrmEngagements extends ClientSDK {
     async getEngagements(
         xConnectionToken: string,
         remoteData?: boolean | undefined,
-        pageSize?: number | undefined,
+        limit?: number | undefined,
         cursor?: string | undefined,
         options?: RequestOptions
     ): Promise<operations.GetEngagementsResponse> {
         const input$: operations.GetEngagementsRequest = {
             xConnectionToken: xConnectionToken,
             remoteData: remoteData,
-            pageSize: pageSize,
+            limit: limit,
             cursor: cursor,
         };
         const headers$ = new Headers();
@@ -73,7 +73,7 @@ export class CrmEngagements extends ClientSDK {
 
         const query$ = encodeFormQuery$({
             cursor: payload$.cursor,
-            pageSize: payload$.pageSize,
+            limit: payload$.limit,
             remote_data: payload$.remote_data,
         });
 
@@ -216,76 +216,6 @@ export class CrmEngagements extends ClientSDK {
     }
 
     /**
-     * Update a Engagement
-     */
-    async updateEngagement(
-        id: string,
-        options?: RequestOptions
-    ): Promise<operations.UpdateEngagementResponse> {
-        const input$: operations.UpdateEngagementRequest = {
-            id: id,
-        };
-        const headers$ = new Headers();
-        headers$.set("user-agent", SDK_METADATA.userAgent);
-        headers$.set("Accept", "application/json");
-
-        const payload$ = schemas$.parse(
-            input$,
-            (value$) => operations.UpdateEngagementRequest$.outboundSchema.parse(value$),
-            "Input validation failed"
-        );
-        const body$ = null;
-
-        const path$ = this.templateURLComponent("/crm/engagements")();
-
-        const query$ = encodeFormQuery$({
-            id: payload$.id,
-        });
-
-        let security$;
-        if (typeof this.options$.jwt === "function") {
-            security$ = { jwt: await this.options$.jwt() };
-        } else if (this.options$.jwt) {
-            security$ = { jwt: this.options$.jwt };
-        } else {
-            security$ = {};
-        }
-        const context = {
-            operationID: "updateEngagement",
-            oAuth2Scopes: [],
-            securitySource: this.options$.jwt,
-        };
-        const securitySettings$ = this.resolveGlobalSecurity(security$);
-
-        const doOptions = { context, errorCodes: ["4XX", "5XX"] };
-        const request$ = this.createRequest$(
-            context,
-            {
-                security: securitySettings$,
-                method: "PATCH",
-                path: path$,
-                headers: headers$,
-                query: query$,
-                body: body$,
-            },
-            options
-        );
-
-        const response = await this.do$(request$, doOptions);
-
-        const responseFields$ = {
-            HttpMeta: { Response: response, Request: request$ },
-        };
-
-        const [result$] = await this.matcher<operations.UpdateEngagementResponse>()
-            .json(200, operations.UpdateEngagementResponse$, { key: "object" })
-            .fail(["4XX", "5XX"])
-            .match(response, request$, { extraFields: responseFields$ });
-
-        return result$;
-    }
-
-    /**
      * Retrieve a Engagement
      *
      * @remarks
@@ -357,90 +287,6 @@ export class CrmEngagements extends ClientSDK {
 
         const [result$] = await this.matcher<operations.GetEngagementResponse>()
             .json(200, operations.GetEngagementResponse$, { key: "object" })
-            .fail(["4XX", "5XX"])
-            .match(response, request$, { extraFields: responseFields$ });
-
-        return result$;
-    }
-
-    /**
-     * Add a batch of Engagements
-     */
-    async addEngagements(
-        xConnectionToken: string,
-        requestBody: Array<components.UnifiedEngagementInput>,
-        remoteData?: boolean | undefined,
-        options?: RequestOptions
-    ): Promise<operations.AddEngagementsResponse> {
-        const input$: operations.AddEngagementsRequest = {
-            xConnectionToken: xConnectionToken,
-            remoteData: remoteData,
-            requestBody: requestBody,
-        };
-        const headers$ = new Headers();
-        headers$.set("user-agent", SDK_METADATA.userAgent);
-        headers$.set("Content-Type", "application/json");
-        headers$.set("Accept", "application/json");
-
-        const payload$ = schemas$.parse(
-            input$,
-            (value$) => operations.AddEngagementsRequest$.outboundSchema.parse(value$),
-            "Input validation failed"
-        );
-        const body$ = encodeJSON$("body", payload$.RequestBody, { explode: true });
-
-        const path$ = this.templateURLComponent("/crm/engagements/batch")();
-
-        const query$ = encodeFormQuery$({
-            remote_data: payload$.remote_data,
-        });
-
-        headers$.set(
-            "x-connection-token",
-            encodeSimple$("x-connection-token", payload$["x-connection-token"], {
-                explode: false,
-                charEncoding: "none",
-            })
-        );
-
-        let security$;
-        if (typeof this.options$.jwt === "function") {
-            security$ = { jwt: await this.options$.jwt() };
-        } else if (this.options$.jwt) {
-            security$ = { jwt: this.options$.jwt };
-        } else {
-            security$ = {};
-        }
-        const context = {
-            operationID: "addEngagements",
-            oAuth2Scopes: [],
-            securitySource: this.options$.jwt,
-        };
-        const securitySettings$ = this.resolveGlobalSecurity(security$);
-
-        const doOptions = { context, errorCodes: ["4XX", "5XX"] };
-        const request$ = this.createRequest$(
-            context,
-            {
-                security: securitySettings$,
-                method: "POST",
-                path: path$,
-                headers: headers$,
-                query: query$,
-                body: body$,
-            },
-            options
-        );
-
-        const response = await this.do$(request$, doOptions);
-
-        const responseFields$ = {
-            HttpMeta: { Response: response, Request: request$ },
-        };
-
-        const [result$] = await this.matcher<operations.AddEngagementsResponse>()
-            .json(200, operations.AddEngagementsResponse$, { key: "object" })
-            .json(201, operations.AddEngagementsResponse$, { key: "UnifiedEngagementOutputs" })
             .fail(["4XX", "5XX"])
             .match(response, request$, { extraFields: responseFields$ });
 

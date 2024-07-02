@@ -18,7 +18,7 @@ export type GetTicketsRequest = {
     /**
      * Set to get the number of records.
      */
-    pageSize?: number | undefined;
+    limit?: number | undefined;
     /**
      * Set to get the number of records after this cursor.
      */
@@ -43,7 +43,7 @@ export namespace GetTicketsRequest$ {
         .object({
             "x-connection-token": z.string(),
             remote_data: z.boolean().optional(),
-            pageSize: z.number().default(50),
+            limit: z.number().default(50),
             cursor: z.string().optional(),
         })
         .transform((v) => {
@@ -56,7 +56,7 @@ export namespace GetTicketsRequest$ {
     export type Outbound = {
         "x-connection-token": string;
         remote_data?: boolean | undefined;
-        pageSize: number;
+        limit: number;
         cursor?: string | undefined;
     };
 
@@ -64,7 +64,7 @@ export namespace GetTicketsRequest$ {
         .object({
             xConnectionToken: z.string(),
             remoteData: z.boolean().optional(),
-            pageSize: z.number().default(50),
+            limit: z.number().default(50),
             cursor: z.string().optional(),
         })
         .transform((v) => {

@@ -46,14 +46,14 @@ export class TicketingCollections extends ClientSDK {
     async getCollections(
         xConnectionToken: string,
         remoteData?: boolean | undefined,
-        pageSize?: number | undefined,
+        limit?: number | undefined,
         cursor?: string | undefined,
         options?: RequestOptions
     ): Promise<operations.GetCollectionsResponse> {
         const input$: operations.GetCollectionsRequest = {
             xConnectionToken: xConnectionToken,
             remoteData: remoteData,
-            pageSize: pageSize,
+            limit: limit,
             cursor: cursor,
         };
         const headers$ = new Headers();
@@ -71,7 +71,7 @@ export class TicketingCollections extends ClientSDK {
 
         const query$ = encodeFormQuery$({
             cursor: payload$.cursor,
-            pageSize: payload$.pageSize,
+            limit: payload$.limit,
             remote_data: payload$.remote_data,
         });
 

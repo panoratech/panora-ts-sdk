@@ -46,14 +46,14 @@ export class TicketingAccounts extends ClientSDK {
     async getTicketingAccounts(
         xConnectionToken: string,
         remoteData?: boolean | undefined,
-        pageSize?: number | undefined,
+        limit?: number | undefined,
         cursor?: string | undefined,
         options?: RequestOptions
     ): Promise<operations.GetTicketingAccountsResponse> {
         const input$: operations.GetTicketingAccountsRequest = {
             xConnectionToken: xConnectionToken,
             remoteData: remoteData,
-            pageSize: pageSize,
+            limit: limit,
             cursor: cursor,
         };
         const headers$ = new Headers();
@@ -71,7 +71,7 @@ export class TicketingAccounts extends ClientSDK {
 
         const query$ = encodeFormQuery$({
             cursor: payload$.cursor,
-            pageSize: payload$.pageSize,
+            limit: payload$.limit,
             remote_data: payload$.remote_data,
         });
 

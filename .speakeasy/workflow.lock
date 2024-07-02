@@ -1,9 +1,9 @@
-speakeasyVersion: 1.313.2
+speakeasyVersion: 1.325.0
 sources:
     panoraOpenapi-github-main:
         sourceNamespace: panora-openapi-github-main
-        sourceRevisionDigest: sha256:c8a97798c5e16910bcd080cc133cc73d0a8116ebdf7d4969287047721741fa3c
-        sourceBlobDigest: sha256:6bddb47b5739d50650681ade0f15ce7a804f7592e9f8ad2bbb5719ed3933ea7a
+        sourceRevisionDigest: sha256:ec3bae73f83e9e11d61b4142f8386c13df64eae0efff81161eaa92bddc939045
+        sourceBlobDigest: sha256:c776edd26f894761dc66fde599a7c57d115f9837e268686bfb49c1bf57c3c8e9
         tags:
             - latest
             - main
@@ -11,8 +11,8 @@ targets:
     my-first-target:
         source: panoraOpenapi-github-main
         sourceNamespace: panora-openapi-github-main
-        sourceRevisionDigest: sha256:c8a97798c5e16910bcd080cc133cc73d0a8116ebdf7d4969287047721741fa3c
-        sourceBlobDigest: sha256:6bddb47b5739d50650681ade0f15ce7a804f7592e9f8ad2bbb5719ed3933ea7a
+        sourceRevisionDigest: sha256:ec3bae73f83e9e11d61b4142f8386c13df64eae0efff81161eaa92bddc939045
+        sourceBlobDigest: sha256:c776edd26f894761dc66fde599a7c57d115f9837e268686bfb49c1bf57c3c8e9
         outLocation: /github/workspace/repo
 workflow:
     workflowVersion: 1.0.0

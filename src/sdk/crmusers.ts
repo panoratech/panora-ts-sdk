@@ -46,14 +46,14 @@ export class CrmUsers extends ClientSDK {
     async getCrmUsers(
         xConnectionToken: string,
         remoteData?: boolean | undefined,
-        pageSize?: number | undefined,
+        limit?: number | undefined,
         cursor?: string | undefined,
         options?: RequestOptions
     ): Promise<operations.GetCrmUsersResponse> {
         const input$: operations.GetCrmUsersRequest = {
             xConnectionToken: xConnectionToken,
             remoteData: remoteData,
-            pageSize: pageSize,
+            limit: limit,
             cursor: cursor,
         };
         const headers$ = new Headers();
@@ -71,7 +71,7 @@ export class CrmUsers extends ClientSDK {
 
         const query$ = encodeFormQuery$({
             cursor: payload$.cursor,
-            pageSize: payload$.pageSize,
+            limit: payload$.limit,
             remote_data: payload$.remote_data,
         });
 
